@@ -32,21 +32,23 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(
-                  options => options.Filters.Add(new AuthorizeFilter())
+                options => options.Filters.Add(new AuthorizeFilter())
             );
-         
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Api", Version = "v1"}); });
 
-            
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" }); });
+
+
             // For DEV only.
-            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
-            
+            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()));
+
             services.AddAuthentication(OAuth2IntrospectionDefaults.AuthenticationScheme)
                 .AddOAuth2Introspection(options =>
                 {
                     options.Authority = "http://localhost:8080/auth/realms/master";
                     options.ClientId = "api-rest";
-                    options.ClientSecret = "84314fc3-be1f-48af-966a-1eabd08ab407";
+                    options.ClientSecret = "695e91bd-dbb0-4194-96ab-67a2a623ff13";
                 });
         }
 
@@ -63,7 +65,7 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseCors();
-            
+
             app.UseRouting();
 
             app.UseAuthentication();
